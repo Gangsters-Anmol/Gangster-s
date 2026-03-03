@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story — Class Memories</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="hero__bg" aria-hidden="true">
+      <img src="images/banner.jpg" alt="Our class" class="hero__img" id="heroBg" />
+    </div>
+    <div class="hero__gradient" aria-hidden="true"></div>
+    <canvas id="fogCanvas" class="fog-canvas" aria-hidden="true"></canvas>
+    <div class="hero__content reveal">
+      <p class="hero__eyebrow">Class of 2025-26</p>
+      <h1 class="hero__title">
+        <span class="hero__title-line">Where We</span>
+        <em class="hero__title-line hero__title-line--italic">Began</em>
+      </h1>
+      <p class="hero__sub">A collection of moments we'll carry forever.</p>
+      <a href="#memories" class="btn-ghost">Explore Memories</a>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span class="scroll-hint__line"></span>
+      <span class="scroll-hint__label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <nav id="mainNav" class="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav__logo">Memories</a>
+    <ul class="nav__links">
+      <li><a href="#memories">Gallery</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#family">Family</a></li>
+      <li><a href="#quotes">Voices</a></li>
+      <li><a href="#farewell">Farewell</a></li>
+    </ul>
+  </nav>
+
+  <!-- MEMORIES -->
+  <section id="memories" class="section memories">
+    <div class="container">
+      <header class="section__header reveal">
+        <span class="section__tag">Gallery</span>
+        <h2 class="section__title">Moments in Time</h2>
+        <p class="section__desc">Every frame holds a feeling we never want to forget.</p>
+      </header>
+      <div class="card-grid">
+        <article class="card reveal" style="--delay: 0.05s">
+          <div class="card__img-wrap"><img src="images/photo1.jpg" alt="Description" class="card-img"></div>
+          <div class="card__body">
+            <span class="card__tag">First exam day</span>
+            <h3 class="card__title">The End</h3>
+            <p class="card__text">Nervous smiles and new backpacks — the first chapter of our story.</p>
+          </div>
+        </article>
+        <article class="card reveal" style="--delay: 0.10s">
+          <div class="card__img-wrap"><img src="images/photo2.jpg" alt="Description" class="card-img"></div>
+          <div class="card__body">
+            <span class="card__tag">Events</span>
+            <h3 class="card__title">baati-chokha program</h3>
+            <p class="card__text">Colors, music, and laughter that filled the halls for hours.</p>
+          </div>
+        </article>
+        <article class="card reveal" style="--delay: 0.15s">
+          <div class="card__img-wrap"><img src="images/photo3.jpg" alt="Description" class="card-img"></div>
+          <div class="card__body">
+            <span class="card__tag">fun</span>
+            <h3 class="card__title">Children's day </h3>
+            <p class="card__text">We ran, we fell, we got back up — together.</p>
+          </div>
+        </article>
+        <article class="card reveal" style="--delay: 0.20s">
+          <div class="card__img-wrap"><img src="images/photo4.jpg" alt="Description" class="card-img"></div>
+          <div class="card__body">
+            <span class="card__tag">PHOTOGRAPHY</span>
+            <h3 class="card__title">Marriage ceremony</h3>
+            <p class="card__text">Miles away from school, yet never closer as a class.</p>
+          </div>
+        </article>
+        <article class="card reveal" style="--delay: 0.25s">
+          <div class="card__img-wrap"><img src="images/photo5.jpg" alt="Description" class="card-img"></div>
+          <div class="card__body">
+            <span class="card__tag">SCHOOL</span>
+            <h3 class="card__title">Front view</h3>
+            <p class="card__text">Creativity poured onto every wall and every canvas.</p>
+          </div>
+        </article>
+        <article class="card reveal" style="--delay: 0.30s">
+          <div class="card__img-wrap"><img src="images/photo6.jpg" alt="Description" class="card-img"></div>
+          <div class="card__body">
+            <span class="card__tag">TRIP</span>
+            <h3 class="card__title">chitrakoot</h3>
+            <p class="card__text">The moment we'd prepared for — and dreaded all at once.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section about">
+    <div class="about__inner container">
+      <div class="about__text reveal">
+        <span class="section__tag">Our Class</span>
+        <h2 class="section__title">More Than a Grade</h2>
+        <p>We walked into these halls as strangers with matching uniforms and left as something far harder to name. This page is not just a yearbook — it is a love letter to the ordinary Tuesday mornings, the cramped cafeteria tables, the whispered jokes during assembly, and every imperfect, irreplaceable moment in between.</p>
+        <p>To every teacher who believed in us, every friend who stayed up with us, and every memory we made without realising it would matter — <em>thank you</em>.</p>
+      </div>
+      <div class="about__stat-grid reveal" style="--delay: 0.2s">
+        <div class="stat-card"><span class="stat-card__num">10+</span><span class="stat-card__label">Years Together</span></div>
+        <div class="stat-card"><span class="stat-card__num">30+</span><span class="stat-card__label">Students</span></div>
+        <div class="stat-card"><span class="stat-card__num">∞</span><span class="stat-card__label">Memories</span></div>
+        <div class="stat-card"><span class="stat-card__num">1</span><span class="stat-card__label">Family</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       MEET THE FAMILY — NEW SECTION
+       ======================================== -->
+  <section id="family" class="section family-section">
+    <canvas id="familyFogCanvas" class="family-fog-canvas" aria-hidden="true"></canvas>
+    <div class="container family-container">
+      <header class="section__header reveal">
+        <span class="section__tag family-tag">Our People</span>
+        <h2 class="section__title family-title">Meet the Family</h2>
+        <p class="section__desc family-desc">Every face, a story. Every name, a memory.</p>
+      </header>
+      <div class="family-categories" id="familyCategories">
+        <button class="family-cat-card reveal" style="--delay:0.05s" data-category="boys">
+          <div class="family-cat-card__icon">♂</div>
+          <h3 class="family-cat-card__title">Know about Boys</h3>
+          <p class="family-cat-card__count">14 members</p>
+          <div class="family-cat-card__glow"></div>
+        </button>
+        <button class="family-cat-card reveal" style="--delay:0.12s" data-category="girls">
+          <div class="family-cat-card__icon">♀</div>
+          <h3 class="family-cat-card__title">Know about Girls</h3>
+          <p class="family-cat-card__count">16 members</p>
+          <div class="family-cat-card__glow"></div>
+        </button>
+        <button class="family-cat-card reveal" style="--delay:0.20s" data-category="teachers">
+          <div class="family-cat-card__icon">🎓</div>
+          <h3 class="family-cat-card__title">Know about Teachers</h3>
+          <p class="family-cat-card__count">Our guides</p>
+          <div class="family-cat-card__glow"></div>
+        </button>
+        <button class="family-cat-card reveal" style="--delay:0.28s" data-category="school">
+          <div class="family-cat-card__icon">🏫</div>
+          <h3 class="family-cat-card__title">Know about School</h3>
+          <p class="family-cat-card__count">Our home</p>
+          <div class="family-cat-card__glow"></div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTES -->
+  <section id="quotes" class="section quotes">
+    <div class="container">
+      <header class="section__header reveal">
+        <span class="section__tag">Voices</span>
+        <h2 class="section__title">What We'll Remember</h2>
+      </header>
+      <div class="quote-grid">
+        <blockquote class="quote-card reveal" style="--delay: 0.05s">
+          <p class="quote-card__text">"LAGAKAR AAG DAMAN ME..........."</p>
+          <footer class="quote-card__footer"><span class="quote-card__name">Harsh pandey.</span><span class="quote-card__role">Class of 2025-26</span></footer>
+        </blockquote>
+        <blockquote class="quote-card reveal" style="--delay: 0.12s">
+          <p class="quote-card__text">"HAMNE WHI LGAYA DIL JHA DIL..........."</p>
+          <footer class="quote-card__footer"><span class="quote-card__name">AMIT DUBAY.</span><span class="quote-card__role">Class of 2025-26</span></footer>
+        </blockquote>
+        <blockquote class="quote-card reveal" style="--delay: 0.20s">
+          <p class="quote-card__text">"MY NEW VERSION IS COMING SOON JUST WAIT AND SEE."</p>
+          <footer class="quote-card__footer"><span class="quote-card__name">ANKIT YADAV.</span><span class="quote-card__role">Class of 2025-26</span></footer>
+        </blockquote>
+        <blockquote class="quote-card reveal" style="--delay: 0.28s">
+          <p class="quote-card__text">"BE ALONE."</p>
+          <footer class="quote-card__footer"><span class="quote-card__name">ARYAN DUBAY.</span><span class="quote-card__role">Class of 2025-26</span></footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAREWELL -->
+  <section id="farewell" class="section farewell">
+    <div class="farewell__inner container reveal">
+      <p class="farewell__eyebrow">Until We Meet Again</p>
+      <h2 class="farewell__title">The Best Is<br /><em>Still Ahead</em></h2>
+      <p class="farewell__body">No matter where life takes us, these years shaped us. Carry them gently.</p>
+      <a href="#hero" class="btn-ghost btn-ghost--light">Back to the Beginning</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>CREATED BY ANMOL PATEL &nbsp;·&nbsp; All rights reserved.</p>
+  </footer>
+
+  <!-- DIRECTORY OVERLAY (Name Grid) -->
+  <div id="directoryOverlay" class="dir-overlay" role="dialog" aria-modal="true" hidden>
+    <canvas id="dirFogCanvas" class="dir-fog-canvas" aria-hidden="true"></canvas>
+    <div class="dir-overlay__inner">
+      <button class="overlay-close-btn" id="dirClose" aria-label="Close">&#x2715;</button>
+      <header class="dir-overlay__header">
+        <p class="dir-overlay__eyebrow" id="dirEyebrow">Our Family</p>
+        <h2 class="dir-overlay__title" id="dirTitle">Boys</h2>
+      </header>
+      <div class="dir-name-grid" id="dirNameGrid"></div>
+    </div>
+  </div>
+
+  <!-- PROFILE OVERLAY (Individual Card) -->
+  <div id="profileOverlay" class="profile-overlay" role="dialog" aria-modal="true" hidden>
+    <canvas id="profileFogCanvas" class="profile-fog-canvas" aria-hidden="true"></canvas>
+    <div class="profile-overlay__inner">
+      <button class="overlay-close-btn" id="profileClose" aria-label="Close">&#x2715;</button>
+      <div class="profile-card">
+        <div class="profile-card__photo-side">
+          <div class="profile-card__photo-wrap">
+            <div class="profile-card__photo-placeholder" id="profilePhotoPlaceholder">
+              <span id="profileInitials"></span>
+            </div>
+            <img id="profilePhoto" class="profile-card__photo" src="" alt="" />
+          </div>
+          <div class="profile-card__photo-glow" id="profileGlow"></div>
+        </div>
+        <div class="profile-card__info-side">
+          <span class="profile-card__category-tag" id="profileCategory"></span>
+          <h2 class="profile-card__name" id="profileName"></h2>
+          <div class="profile-card__details" id="profileDetails"></div>
+          <p class="profile-card__quote" id="profileQuote"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
