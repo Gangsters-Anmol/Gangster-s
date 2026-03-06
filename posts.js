@@ -17,7 +17,7 @@ import { onAuthChange, showToast,
 
 /* ══ CLOUDINARY CONFIG ══════════════════════════════════════════ */
 const CLOUD_NAME    = "dsbsinbun";
-const UPLOAD_PRESET = "ml_default"; // Set to your unsigned preset in Cloudinary dashboard
+const UPLOAD_PRESET = "ghost_user"; // Set to your unsigned preset in Cloudinary dashboard
 
 /* ══ FILE SIZE LIMITS ═══════════════════════════════════════════ */
 const MAX_IMAGE_SIZE = 5  * 1024 * 1024;  // 5 MB
