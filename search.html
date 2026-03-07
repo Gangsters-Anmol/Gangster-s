@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search · MEMORIES2026</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── CSS Variables (mirrors main site) ───────────────────── */
+    :root {
+      --bg:          #f9f6f1;
+      --bg-alt:      #f0ebe3;
+      --surface:     rgba(255,255,255,0.72);
+      --surface-hov: rgba(255,255,255,0.9);
+      --border:      rgba(0,0,0,0.08);
+      --text:        #1a1613;
+      --text-muted:  #7a736b;
+      --accent:      #c8a96e;
+      --accent-2:    #8b5e3c;
+      --shadow:      0 4px 32px rgba(0,0,0,0.08);
+      --shadow-lg:   0 12px 60px rgba(0,0,0,0.14);
+      --radius:      16px;
+      --radius-sm:   8px;
+      --glass-blur:  blur(16px);
+      --trans:       0.25s ease;
+    }
+    [data-theme="dark"] {
+      --bg:          #0f0d0b;
+      --bg-alt:      #1a1713;
+      --surface:     rgba(30,26,22,0.85);
+      --surface-hov: rgba(40,35,30,0.95);
+      --border:      rgba(255,255,255,0.08);
+      --text:        #f0ead8;
+      --text-muted:  #9a8f82;
+      --accent:      #c8a96e;
+      --accent-2:    #e8c88e;
+      --shadow:      0 4px 32px rgba(0,0,0,0.4);
+      --shadow-lg:   0 12px 60px rgba(0,0,0,0.6);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: background var(--trans), color var(--trans);
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1rem,4vw,3rem); height: 60px;
+      background: var(--surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav__logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600;
+      color: var(--text); text-decoration: none; letter-spacing: .04em;
+    }
+    .nav__logo span { color: var(--accent); }
+    .nav__controls { display: flex; align-items: center; gap: .75rem; }
+    .nav__back {
+      font-size: .8rem; color: var(--text-muted);
+      text-decoration: none; transition: color var(--trans);
+    }
+    .nav__back:hover { color: var(--accent); }
+    .nav__theme-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-muted); cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--trans);
+    }
+    .nav__theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── PAGE LAYOUT ─────────────────────────────────────────── */
+    .search-page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 4vw, 2rem);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* ── PAGE TITLE ──────────────────────────────────────────── */
+    .search-page__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5vw, 2.4rem);
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: .02em;
+    }
+    .search-page__title span { color: var(--accent); }
+
+    /* ── SEARCH BAR ──────────────────────────────────────────── */
+    .search-bar-wrap {
+      position: relative;
+    }
+    .search-bar-icon {
+      position: absolute;
+      left: 1rem; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .search-bar-input {
+      width: 100%;
+      padding: .85rem 1rem .85rem 2.8rem;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-size: .95rem;
+      outline: none;
+      transition: all var(--trans);
+      box-shadow: var(--shadow);
+    }
+    .search-bar-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,169,110,.15), var(--shadow);
+    }
+    .search-bar-input::placeholder { color: var(--text-muted); }
+    .search-bar-clear {
+      position: absolute;
+      right: 1rem; top: 50%;
+      transform: translateY(-50%);
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: var(--bg-alt);
+      color: var(--text-muted);
+      font-size: .75rem;
+      cursor: pointer;
+      display: none;
+      align-items: center; justify-content: center;
+      transition: all var(--trans);
+    }
+    .search-bar-clear.visible { display: flex; }
+    .search-bar-clear:hover { background: var(--accent); color: #fff; }
+
+    /* ── SECTION HEADERS ─────────────────────────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: .02em;
+    }
+    .section-count {
+      font-size: .75rem;
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* ── USER CARD ───────────────────────────────────────────── */
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: .9rem 1.1rem;
+      border-radius: var(--radius);
+      background: var(--surface);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: var(--text);
+      transition: all var(--trans);
+      cursor: pointer;
+      position: relative;
+    }
+    .user-card:hover {
+      background: var(--surface-hov);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Avatar */
+    .user-card__avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 600; color: #fff;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .user-card__avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 50%;
+    }
+
+    /* Presence dot on avatar */
+    .user-card__presence-dot {
+      position: absolute;
+      bottom: 1px; right: 1px;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      background: #bbb;
+      transition: background .3s ease;
+    }
+    .user-card__presence-dot--online {
+      background: #2ecc71;
+      box-shadow: 0 0 0 0 rgba(46,204,113,.6);
+      animation: uc-pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes uc-pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(46,204,113,.55); }
+      60%  { box-shadow: 0 0 0 5px rgba(46,204,113,0); }
+      100% { box-shadow: 0 0 0 0   rgba(46,204,113,0); }
+    }
+
+    /* Info */
+    .user-card__info { flex: 1; min-width: 0; }
+    .user-card__name {
+      font-weight: 500; font-size: .95rem;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .user-card__meta {
+      display: flex; align-items: center; gap: .5rem;
+      margin-top: .2rem; flex-wrap: wrap;
+    }
+    .user-card__role {
+      font-size: .7rem; color: var(--text-muted);
+      text-transform: capitalize;
+    }
+    .user-card__followers {
+      font-size: .7rem; color: var(--text-muted);
+    }
+    .user-card__followers::before {
+      content: "·";
+      margin-right: .3rem;
+      opacity: .5;
+    }
+    .user-card__presence-text {
+      font-size: .68rem;
+      font-style: italic;
+    }
+    .user-card__presence-text--online {
+      color: #2ecc71; font-style: normal; font-weight: 500;
+    }
+    .user-card__presence-text--offline { color: var(--text-muted); }
+
+    /* Role badge */
+    .user-card__role-badge {
+      display: inline-flex; align-items: center;
+      padding: .1rem .5rem;
+      border-radius: 50px;
+      font-size: .65rem; font-weight: 500;
+      border: 1px solid transparent;
+    }
+    .role-badge--student    { background: rgba(200,169,110,.15); color: var(--accent); border-color: rgba(200,169,110,.3); }
+    .role-badge--teacher    { background: rgba(91,158,240,.15);  color: #3a6bc8;       border-color: rgba(91,158,240,.3); }
+    .role-badge--parent     { background: rgba(107,207,138,.15); color: #3a9a5c;       border-color: rgba(107,207,138,.3); }
+    .role-badge--admin      { background: rgba(91,158,240,.15);  color: #3a6bc8;       border-color: rgba(91,158,240,.3); }
+
+    /* Special badge */
+    .user-card__special { font-size: .75rem; }
+
+    /* Follow button */
+    .user-card__follow-btn {
+      padding: .38rem 1rem;
+      border-radius: 50px;
+      border: 1.5px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      font-family: 'Jost', sans-serif;
+      font-size: .75rem; font-weight: 500;
+      cursor: pointer;
+      transition: all var(--trans);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .user-card__follow-btn:hover {
+      background: var(--accent); color: #fff;
+    }
+    .user-card__follow-btn.following {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+    .user-card__follow-btn.following:hover {
+      border-color: #e74c3c; color: #e74c3c;
+    }
+
+    /* ── LISTS ───────────────────────────────────────────────── */
+    .user-list { display: flex; flex-direction: column; gap: .65rem; }
+
+    /* ── EMPTY / LOADING STATES ──────────────────────────────── */
+    .state-loading {
+      display: flex; align-items: center; gap: .75rem;
+      padding: 2.5rem 1rem; color: var(--text-muted);
+      font-size: .85rem;
+    }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2.5px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .75s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .state-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+    .state-empty__icon { font-size: 2.5rem; display: block; margin-bottom: .6rem; }
+    .state-empty__title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--text); margin-bottom: .3rem;
+    }
+    .state-empty__desc { font-size: .82rem; line-height: 1.6; }
+
+    /* ── NO RESULTS HIGHLIGHT ────────────────────────────────── */
+    .search-highlight {
+      background: rgba(200,169,110,.18);
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+
+    /* ── TAGS / ROLE FILTER ──────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: .25rem;
+    }
+    .filter-chip {
+      padding: .3rem .85rem;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+      font-size: .75rem; font-weight: 500;
+      cursor: pointer;
+      transition: all var(--trans);
+    }
+    .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-chip.active {
+      background: var(--accent); border-color: var(--accent); color: #fff;
+    }
+
+    /* ── AUTH GATE ───────────────────────────────────────────── */
+    .auth-gate {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .auth-gate h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; margin-bottom: .75rem;
+    }
+    .auth-gate p { color: var(--text-muted); margin-bottom: 1.5rem; }
+    .btn-primary {
+      padding: .65rem 1.8rem; border-radius: 50px;
+      background: var(--accent); color: #fff; border: none;
+      font-family: 'Jost', sans-serif; font-size: .9rem; font-weight: 500;
+      cursor: pointer; transition: all var(--trans);
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent-2); transform: translateY(-1px); }
+
+    /* ── TOAST ───────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--text); color: var(--bg);
+      padding: .6rem 1.4rem; border-radius: 50px;
+      font-size: .82rem; font-family: 'Jost', sans-serif;
+      opacity: 0; transition: all .3s ease; pointer-events: none; z-index: 9999;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .user-card__follow-btn { padding: .35rem .75rem; font-size: .7rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">Memo<span>ries</span></a>
+    <div class="nav__controls">
+      <a href="index.html" class="nav__back">← Home</a>
+      <button class="nav__theme-btn" id="themeToggle" title="Toggle theme">◐</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="search-page" id="searchPage">
+    <div class="state-loading">
+      <div class="spinner"></div>
+      <span>Loading…</span>
+    </div>
+  </main>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { initializeApp }   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged }
+                               from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+    import {
+      getFirestore, collection, doc, getDoc, getDocs,
+      setDoc, deleteDoc, updateDoc, increment,
+      query, where, orderBy, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+    /* ── Firebase ─────────────────────────────────────────────── */
+    const firebaseConfig = {
+      apiKey:            "AIzaSyBfM7Wn6HbkgfUf0eePFbsxN7bJv_fersM",
+      authDomain:        "gangster-s-2025-26.firebaseapp.com",
+      projectId:         "gangster-s-2025-26",
+      storageBucket:     "gangster-s-2025-26.firebasestorage.app",
+      messagingSenderId: "725698254504",
+      appId:             "1:725698254504:web:fa7e271aab3dd40c6ed49d",
+    };
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    /* ── Theme ────────────────────────────────────────────────── */
+    const saved = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", saved);
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("theme", next);
+    });
+
+    /* ── Toast ────────────────────────────────────────────────── */
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(el._t);
+      el._t = setTimeout(() => el.classList.remove("show"), 3000);
+    }
+
+    /* ── Escape ───────────────────────────────────────────────── */
+    function esc(s) {
+      return String(s ?? "")
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    /* ── State ────────────────────────────────────────────────── */
+    let currentUser    = null;
+    let currentProfile = null;
+    let allUsers       = [];      // full user list loaded once
+    let followingSet   = new Set(); // UIDs the current user follows
+    let activeFilter   = "all";   // role filter
+    let searchQuery    = "";
+
+    const OFFLINE_THRESHOLD = 120_000;
+
+    function isOnline(data) {
+      if (!data.online) return false;
+      const lastSeen = data.lastSeen?.toDate?.()?.getTime?.() || 0;
+      return (Date.now() - lastSeen) < OFFLINE_THRESHOLD;
+    }
+
+    function timeAgo(date) {
+      if (!date) return "Offline";
+      const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+      if (diff < 60)    return "Active now";
+      if (diff < 3600)  return `Last seen ${Math.floor(diff/60)}m ago`;
+      if (diff < 86400) return `Last seen ${Math.floor(diff/3600)}h ago`;
+      return `Last seen ${date.toLocaleDateString("en-IN",{day:"numeric",month:"short"})}`;
+    }
+
+    /* ── Auth ─────────────────────────────────────────────────── */
+    onAuthStateChanged(auth, async user => {
+      currentUser = user;
+      if (!user) { renderAuthGate(); return; }
+      const snap = await getDoc(doc(db, "users", user.uid));
+      if (snap.exists()) currentProfile = snap.data();
+      await loadData();
+      renderPage();
+    });
+
+    /* ── Load all users + following set ──────────────────────── */
+    async function loadData() {
+      const [usersSnap, followsSnap] = await Promise.all([
+        getDocs(query(collection(db, "users"), where("profileComplete", "==", true))),
+        getDocs(query(collection(db, "follows"), where("followerId", "==", currentUser.uid))),
+      ]);
+
+      followingSet = new Set(followsSnap.docs.map(d => d.data().followingId));
+
+      allUsers = usersSnap.docs
+        .map(d => ({ uid: d.id, ...d.data() }))
+        .filter(u => !u.banned && u.uid !== currentUser.uid)
+        .sort((a, b) => (b.followersCount || 0) - (a.followersCount || 0));
+    }
+
+    /* ── RENDER AUTH GATE ─────────────────────────────────────── */
+    function renderAuthGate() {
+      document.getElementById("searchPage").innerHTML = `
+        <div class="auth-gate">
+          <h2>🔒 Sign in to search</h2>
+          <p>You need to be logged in to search and discover classmates.</p>
+          <a href="index.html" class="btn-primary">Go to Home & Login</a>
+        </div>`;
+    }
+
+    /* ── RENDER FULL PAGE ─────────────────────────────────────── */
+    function renderPage() {
+      const page = document.getElementById("searchPage");
+
+      page.innerHTML = `
+        <h1 class="search-page__title">Search <span>&amp;</span> Discover</h1>
+
+        <!-- Search bar -->
+        <div class="search-bar-wrap">
+          <span class="search-bar-icon">🔍</span>
+          <input
+            class="search-bar-input"
+            id="searchInput"
+            type="search"
+            placeholder="Search classmates by name…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="search-bar-clear" id="searchClear" title="Clear">✕</button>
+        </div>
+
+        <!-- Role filters -->
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-chip active" data-role="all">All</button>
+          <button class="filter-chip" data-role="student">Students</button>
+          <button class="filter-chip" data-role="teacher">Teachers</button>
+          <button class="filter-chip" data-role="parent">Parents</button>
+        </div>
+
+        <!-- Search results (hidden until user types) -->
+        <div id="searchResultsSection" hidden>
+          <div class="section-header">
+            <span class="section-title">Results</span>
+            <span class="section-count" id="searchResultCount"></span>
+          </div>
+          <div class="user-list" id="searchResultsList"></div>
+        </div>
+
+        <!-- Discover section -->
+        <div id="discoverSection">
+          <div class="section-header">
+            <span class="section-title">✦ Discover People</span>
+            <span class="section-count" id="discoverCount"></span>
+          </div>
+          <div class="user-list" id="discoverList">
+            <div class="state-loading">
+              <div class="spinner"></div>
+              <span>Loading suggestions…</span>
+            </div>
+          </div>
+        </div>`;
+
+      /* Bind search input */
+      const input    = document.getElementById("searchInput");
+      const clearBtn = document.getElementById("searchClear");
+
+      input.addEventListener("input", () => {
+        searchQuery = input.value.trim();
+        clearBtn.classList.toggle("visible", searchQuery.length > 0);
+        renderResults();
+      });
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        searchQuery = "";
+        clearBtn.classList.remove("visible");
+        renderResults();
+        input.focus();
+      });
+
+      /* Bind filter chips */
+      document.querySelectorAll(".filter-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          activeFilter = chip.dataset.role;
+          renderResults();
+          renderDiscover();
+        });
+      });
+
+      /* Initial render */
+      renderDiscover();
+      input.focus();
+    }
+
+    /* ── FILTER USERS ─────────────────────────────────────────── */
+    function filterUsers(users, query, role) {
+      return users.filter(u => {
+        const matchRole = role === "all" || (u.role || "").toLowerCase() === role;
+        const matchName = !query ||
+          (u.name || "").toLowerCase().includes(query.toLowerCase());
+        return matchRole && matchName;
+      });
+    }
+
+    /* ── RENDER SEARCH RESULTS ────────────────────────────────── */
+    function renderResults() {
+      const resultsSection = document.getElementById("searchResultsSection");
+      const discoverSection= document.getElementById("discoverSection");
+      const list           = document.getElementById("searchResultsList");
+      const countEl        = document.getElementById("searchResultCount");
+
+      if (!searchQuery) {
+        resultsSection.hidden  = true;
+        discoverSection.hidden = false;
+        return;
+      }
+
+      resultsSection.hidden  = false;
+      discoverSection.hidden = true;
+
+      const results = filterUsers(allUsers, searchQuery, activeFilter);
+      countEl.textContent = `${results.length} found`;
+
+      if (!results.length) {
+        list.innerHTML = `
+          <div class="state-empty">
+            <span class="state-empty__icon">🔍</span>
+            <h3 class="state-empty__title">No results</h3>
+            <p class="state-empty__desc">No classmates match "<strong>${esc(searchQuery)}</strong>".<br/>Try a different name or clear the filter.</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      results.forEach(u => list.appendChild(buildCard(u, searchQuery)));
+    }
+
+    /* ── RENDER DISCOVER ──────────────────────────────────────── */
+    function renderDiscover() {
+      const list    = document.getElementById("discoverList");
+      const countEl = document.getElementById("discoverCount");
+      if (!list) return;
+
+      /* Suggestions = users not yet followed, filtered by role */
+      const suggestions = filterUsers(
+        allUsers.filter(u => !followingSet.has(u.uid)),
+        "", activeFilter
+      );
+
+      countEl.textContent = `${suggestions.length} suggestion${suggestions.length !== 1 ? "s" : ""}`;
+
+      if (!suggestions.length) {
+        list.innerHTML = `
+          <div class="state-empty">
+            <span class="state-empty__icon">🎉</span>
+            <h3 class="state-empty__title">You follow everyone!</h3>
+            <p class="state-empty__desc">You're already following all your classmates. Check back after more people join.</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = "";
+      suggestions.forEach(u => list.appendChild(buildCard(u, "")));
+    }
+
+    /* ── BUILD USER CARD ──────────────────────────────────────── */
+    function buildCard(u, highlight) {
+      const online       = isOnline(u);
+      const lastSeen     = u.lastSeen?.toDate?.() || null;
+      const presenceLabel= online ? "Active now"
+        : lastSeen ? timeAgo(lastSeen) : "Offline";
+      const following    = followingSet.has(u.uid);
+      const initials     = (u.name || "?")[0].toUpperCase();
+      const followers    = u.followersCount || 0;
+
+      /* Highlight search term in name */
+      let displayName = esc(u.name);
+      if (highlight) {
+        const re = new RegExp(`(${highlight.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})`, "gi");
+        displayName = esc(u.name).replace(re, `<mark class="search-highlight">$1</mark>`);
+      }
+
+      const card = document.createElement("div");
+      card.className = "user-card";
+      card.dataset.uid = u.uid;
+
+      card.innerHTML = `
+        <div class="user-card__avatar" id="uca-${u.uid}">
+          ${u.photoURL
+            ? `<img src="${esc(u.photoURL)}" alt="${esc(u.name)}" onerror="this.remove()" />`
+            : initials
+          }
+          <span class="user-card__presence-dot ${online ? "user-card__presence-dot--online" : ""}"
+                title="${presenceLabel}"></span>
+        </div>
+        <div class="user-card__info">
+          <div class="user-card__name">${displayName}</div>
+          <div class="user-card__meta">
+            <span class="user-card__role-badge role-badge--${esc(u.role||"student")}">
+              ${esc(u.role || "student")}
+            </span>
+            ${u.specialUser ? `<span class="user-card__special">⭐</span>` : ""}
+            <span class="user-card__followers">${followers} follower${followers !== 1 ? "s" : ""}</span>
+          </div>
+          <div class="user-card__presence-text ${online
+            ? "user-card__presence-text--online"
+            : "user-card__presence-text--offline"}">
+            ${presenceLabel}
+          </div>
+        </div>
+        <button class="user-card__follow-btn${following ? " following" : ""}"
+                data-uid="${u.uid}"
+                data-following="${following ? "1" : "0"}">
+          ${following ? "✓ Following" : "+ Follow"}
+        </button>`;
+
+      /* Click card → profile page */
+      card.addEventListener("click", e => {
+        if (e.target.closest(".user-card__follow-btn")) return;
+        window.location.href = `profile.html?user=${u.uid}`;
+      });
+
+      /* Follow / unfollow button */
+      card.querySelector(".user-card__follow-btn")
+        ?.addEventListener("click", e => {
+          e.stopPropagation();
+          _toggleFollow(u, card);
+        });
+
+      return card;
+    }
+
+    /* ── FOLLOW / UNFOLLOW ────────────────────────────────────── */
+    async function _toggleFollow(u, card) {
+      if (!currentUser) return;
+
+      const btn        = card.querySelector(".user-card__follow-btn");
+      const wasFollow  = btn.dataset.following === "1";
+      const followId   = `${currentUser.uid}_${u.uid}`;
+      const followRef  = doc(db, "follows", followId);
+      const myRef      = doc(db, "users", currentUser.uid);
+      const theirRef   = doc(db, "users", u.uid);
+
+      /* Optimistic UI */
+      const nowFollow = !wasFollow;
+      btn.dataset.following = nowFollow ? "1" : "0";
+      btn.className = `user-card__follow-btn${nowFollow ? " following" : ""}`;
+      btn.textContent = nowFollow ? "✓ Following" : "+ Follow";
+
+      if (nowFollow) {
+        followingSet.add(u.uid);
+      } else {
+        followingSet.delete(u.uid);
+      }
+
+      try {
+        if (nowFollow) {
+          await setDoc(followRef, {
+            followerId:  currentUser.uid,
+            followingId: u.uid,
+            createdAt:   serverTimestamp(),
+          });
+          await updateDoc(myRef,    { followingCount: increment(1) });
+          await updateDoc(theirRef, { followersCount: increment(1) });
+
+          /* Send follow notification */
+          try {
+            await setDoc(
+              doc(db, "notifications", u.uid, "items",
+                `follow_${currentUser.uid}_${Date.now()}`),
+              {
+                type:      "follow",
+                fromUid:   currentUser.uid,
+                fromName:  currentProfile?.name || "Someone",
+                timestamp: serverTimestamp(),
+                read:      false,
+              }
+            );
+          } catch { /* silent */ }
+
+          showToast(`Following ${u.name.split(" ")[0]}! ✦`);
+
+        } else {
+          await deleteDoc(followRef);
+          await updateDoc(myRef,    { followingCount: increment(-1) });
+          await updateDoc(theirRef, { followersCount: increment(-1) });
+          showToast(`Unfollowed ${u.name.split(" ")[0]}`);
+        }
+
+        /* Refresh discover section */
+        renderDiscover();
+
+      } catch (err) {
+        /* Revert on failure */
+        btn.dataset.following = wasFollow ? "1" : "0";
+        btn.className = `user-card__follow-btn${wasFollow ? " following" : ""}`;
+        btn.textContent = wasFollow ? "✓ Following" : "+ Follow";
+        if (nowFollow) followingSet.delete(u.uid); else followingSet.add(u.uid);
+        showToast("Action failed. Try again.");
+      }
+    }
+
+  </script>
+</body>
+</html>
