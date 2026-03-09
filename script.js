@@ -19,7 +19,7 @@ const FAMILY_DATA = {
     members: [
       { name: "Aditya Puspjivi",  photo: "images/boys/aditya.jpg",    quote: "The journey shaped us more than the destination.",         details: { Role: "Student", Class: "2025-26" } },
       { name: "Amit Dubay",       photo: "images/boys/amit.jpg",       quote: "Every day was a new adventure waiting to happen.",          details: { Role: "Student", Class: "2025-26" } },
-      { name: "Abhinav Tawari",    photo: "images/boys/abhinav.jpg",    quote: "Memories are the only things that grow richer over time.", details: { Role: "Student", Class: "2025-26" } },
+      { name: "Abhinav Tiwari",    photo: "images/boys/abhinav.jpg",    quote: "Memories are the only things that grow richer over time.", details: { Role: "Student", Class: "2025-26" } },
       { name: "Ankush Panday",    photo: "images/boys/ankush.jpg",     quote: "We didn't just study — we lived.",                         details: { Role: "Student", Class: "2025-26" } },
       { name: "Ankit Yadav",      photo: "images/boys/ankit.jpg",      quote: "The best chapters of life are written with friends.",       details: { Role: "Student", Class: "2025-26" } },
       { name: "Aryan Dubay",      photo: "images/boys/aryan.jpg",      quote: "Laughter was our secret language.",                        details: { Role: "Student", Class: "2025-26" } },
